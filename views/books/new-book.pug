@@ -3,9 +3,10 @@ extends ../layout.pug
 
 block content
     
-    form(method='POST', action="/books")
-    
+    form(method='POST', action="/books/new")
+
         include form.pug
+
         p
             input(type='submit', value='Create New Book')
         p

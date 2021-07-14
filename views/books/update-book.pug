@@ -3,8 +3,9 @@ extends ../layout.pug
 block content
 
     form(method='POST', action=`/books/${book.id}/edit`)
-    
+
       include form.pug
+      
       p
         input(type='submit', value='Update Book')
       p

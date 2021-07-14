@@ -19,7 +19,7 @@ router.get("/new", (req, res) => {
 
 /* Posts Create book*/
 router.post(
-  "/",
+  "/new",
   asyncHandler(async (req, res) => {
     const book = await Book.create(req.body);
     console.log(req.body);
