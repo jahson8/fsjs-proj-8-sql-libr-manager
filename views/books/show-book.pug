@@ -1,0 +1,20 @@
+extends ../layout.pug 
+
+block content
+ div
+      .split-evenly
+        p Title:
+        p= book.title
+      .split-evenly
+        p Author:
+        p= book.author
+      .split-evenly
+        p Genre:
+        p= book.genre
+      .split-evenly
+        p Year:
+        p= book.year
+      .btn-group
+        a.button(href=`/books/${book.id}/edit`) Update Book
+        a.button(href=`/books/${book.id}/delete`) Delete Book
+        a.button(href='/books') Back
