@@ -14,7 +14,7 @@ router.get(
 
 /* shows create  book form*/
 router.get("/new", (req, res) => {
-  res.render("books/new-book", { book: {}, title: "New Book" });
+  res.render("books/new-book", { title: "New Book" });
 });
 
 /* Posts Create book*/
