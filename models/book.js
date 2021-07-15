@@ -17,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false, // disallow null
         validate: {
-          msg: "The title of the book is required",
+          notEmpty: {
+            msg: "The title of the book is required",
+          },
         },
       },
       author: {

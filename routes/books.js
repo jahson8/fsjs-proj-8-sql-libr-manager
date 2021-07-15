@@ -21,9 +21,24 @@ router.get("/new", (req, res) => {
 router.post(
   "/new",
   asyncHandler(async (req, res) => {
-    const book = await Book.create(req.body);
-    console.log(req.body);
-    res.redirect("/books/" + book.id);
+    let book;
+    try {
+      book = await Book.create(req.body);
+      res.redirect("/books/" + book.id);
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        // checking the error
+
+        book = await Book.build(req.body);
+        res.render("books/new-book", {
+          book,
+          errors: error.errors,
+          title: "New Book",
+        });
+      } else {
+        throw error; // error caught in the asyncHandler's catch block
+      }
+    }
   })
 );
 
@@ -59,13 +74,28 @@ router.get(
 router.post(
   "/:id/edit",
   asyncHandler(async (req, res) => {
-    const book = await Book.findByPk(req.params.id);
-
-    if (book) {
-      await book.update(req.body);
-      res.redirect("/books/" + book.id);
-    } else {
-      res.sendStatus(404);
+    let book;
+    try {
+      book = await Book.findByPk(req.params.id);
+      if (book) {
+        await book.update(req.body);
+        res.redirect("/books/" + book.id);
+      } else {
+        res.sendStatus(404);
+      }
+    } catch (error) {
+      if (error.name === "SequelizeValidationError") {
+        // checking the error
+        book = await Book.build(req.body);
+        book.id = req.params.id; // make sure correct article gets updated
+        res.render("books/update-book", {
+          book,
+          errors: error.errors,
+          title: "Update Book",
+        });
+      } else {
+        throw error; // error caught in the asyncHandler's catch block
+      }
     }
   })
 );
