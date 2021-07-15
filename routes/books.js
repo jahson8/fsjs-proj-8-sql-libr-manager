@@ -1,14 +1,26 @@
 var express = require("express");
 var router = express.Router();
 const Book = require("../models").Book;
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 const asyncHandler = require("../misc");
 
 /* GET home page. Shows the full list of books */
 router.get(
   "/",
   asyncHandler(async (req, res) => {
-    const books = await Book.findAll();
-    res.render("books/index", { books, title: "Books" });
+    //get the page num in the url if no page num yet set to 0
+    const page = req.query.page || 0;
+    const booksPerPage = 10;
+
+    // Calculate offset
+    const offset = page * booksPerPage;
+
+    const books = await Book.findAndCountAll({
+      order: [["title", "ASC"]],
+    });
+
+    res.render("books/index", { books, title: "All Books" });
   })
 );
 

@@ -8,8 +8,8 @@ block content
       include ../includes/form.pug
       
       p
-        input(type='submit', value='Update Book')
-      p
-          a.button(href='/books') Cancel
+        input(type='submit', value='Add Changes')
+      p4
+          a.button(href=`/books/${book.id}`) Cancel
       p
           a.button(href=`/books/${book.id}/delete`) Delete Book

@@ -2,7 +2,11 @@ extends ../layout.pug
 
 block content
   p
-    a.button(href='books/new') Create New Book
+    a.button(href='/books/new') Create New Book
+
+    form(method='POST', action="/")
+      input#search(name='search', type='text', placeholder="Search")
+      input(type="submit" value="Search")
   table
     thead
       tr
@@ -14,7 +18,7 @@ block content
       each book in books
         tr
           td
-            a(href=`books/${book.id}`)= book.title
+            a(href=`/books/${book.id}`)= book.title
           td= book.author
           td= book.genre
           td= book.year
