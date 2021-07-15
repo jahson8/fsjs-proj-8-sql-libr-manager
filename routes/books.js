@@ -10,11 +10,11 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     //get the page num in the url if no page num yet set to 0
-    const page = req.query.page || 0;
+    const page = req.query.page || 1;
     const booksPerPage = 10;
 
     // Calculate offset
-    const offset = page * booksPerPage;
+    const offset = (page - 1) * booksPerPage;
 
     const { count, rows } = await Book.findAndCountAll({
       order: [["title", "ASC"]],

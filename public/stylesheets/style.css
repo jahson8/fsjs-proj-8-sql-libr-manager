@@ -126,7 +126,7 @@ input[type="text"] {
 /* Pagination Link */
 .pagination-links {
   display: flex;
-  margin: 1.1em auto 0;
+  margin: 1.2em auto 0;
 }
 
 .pagination-links a {
