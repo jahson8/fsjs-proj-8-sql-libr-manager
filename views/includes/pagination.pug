@@ -1,0 +1,4 @@
+ul.pagination-links
+    each link, index in pagLinksArr 
+        li
+            a(href=`/books/?page=${index}`)= link

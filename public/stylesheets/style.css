@@ -122,3 +122,22 @@ input[type="text"] {
 .btn-group > * + * {
   margin-left: 0.7em;
 }
+
+/* Pagination Link */
+.pagination-links {
+  display: flex;
+  margin: 1.1em auto 0;
+}
+
+.pagination-links a {
+  display: block;
+  padding: 0.5em;
+}
+
+.pagination-links > * {
+  border: 1px solid;
+}
+
+.pagination-links > * + * {
+  margin-left: 0.5em;
+}

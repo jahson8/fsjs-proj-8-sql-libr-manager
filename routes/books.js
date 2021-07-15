@@ -16,11 +16,22 @@ router.get(
     // Calculate offset
     const offset = page * booksPerPage;
 
-    const books = await Book.findAndCountAll({
+    const { count, rows } = await Book.findAndCountAll({
       order: [["title", "ASC"]],
+      limit: booksPerPage,
+      offset: offset,
     });
 
-    res.render("books/index", { books, title: "All Books" });
+    //getting the num of pages for pagination
+    const numOfPages = Math.ceil(count / booksPerPage);
+
+    //creates an array to iterate through in pug for the pag links
+    const pagLinksArr = [];
+    for (let i = 1; i <= numOfPages; i++) {
+      pagLinksArr.push(i);
+    }
+
+    res.render("books/index", { books: rows, title: "All Books", pagLinksArr });
   })
 );
 
