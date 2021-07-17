@@ -19,16 +19,15 @@ router.get(
     //get the page num in the url if no page num yet set to 0
     const page = req.query.page;
 
-    // redirects to ?page=1 of results
+    // redirects to page=1 of results
     !page || page <= 0 ? res.redirect("?page=1") : null;
 
     const booksPerPage = 10;
-    const offset = (page - 1) * booksPerPage;
 
     const { count, rows } = await Book.findAndCountAll({
       order: [["title", "ASC"]],
       limit: booksPerPage,
-      offset: offset,
+      offset: (page - 1) * booksPerPage,
     });
 
     //getting the num of pages for pagination
@@ -37,7 +36,6 @@ router.get(
     // redirects to last page of results if user enter a get request larger than numOfPages
     page > numOfPages ? res.redirect(`?page=${numOfPages}`) : null;
 
-    //
     let pageLinks = 1;
 
     res.render("books/index", {
@@ -58,13 +56,11 @@ router.get(
     //get the page num in the url if no page num yet set to 0
     let page = req.query.page;
 
-    // redirects to ?page=1 of results
+    // redirects to page=1 of results
     !page || page <= 0 ? res.redirect(`search?term=${term}&page=1`) : null;
 
     // number of books per page
     const booksPerPage = 10;
-    // Calculate records offset
-    const offset = (page - 1) * booksPerPage;
 
     const { count, rows } = await Book.findAndCountAll({
       where: {
@@ -92,7 +88,7 @@ router.get(
         ],
       },
       limit: booksPerPage,
-      offset: offset,
+      offset: (page - 1) * booksPerPage,
     });
 
     if (count > 0) {
@@ -158,7 +154,7 @@ router.get(
     if (book) {
       res.render("books/show-book", { book, title: "Book" });
     } else {
-      res.sendStatus(404);
+      errorHandler(404, "Page Not Found");
     }
   })
 );
@@ -172,7 +168,7 @@ router.get(
     if (book) {
       res.render("books/update-book", { book, title: "Update Book" });
     } else {
-      res.sendStatus(404);
+      errorHandler(404, "Page Not Found");
     }
   })
 );
@@ -216,7 +212,7 @@ router.get(
     if (book) {
       res.render("books/delete-book", { book, title: "Delete Book" });
     } else {
-      res.sendStatus(404);
+      errorHandler(404, "Page Not Found");
     }
   })
 );
@@ -231,7 +227,7 @@ router.post(
       await book.destroy();
       res.redirect("/books");
     } else {
-      res.sendStatus(404);
+      errorHandler(404, "Page Not Found");
     }
   })
 );
