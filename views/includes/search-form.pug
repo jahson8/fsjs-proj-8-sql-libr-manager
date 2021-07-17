@@ -1,0 +1,9 @@
+p
+    if term
+        a.button(href='/books') Back to Book Listing
+    else 
+        a.button(href='/books/new') Create New Book
+
+    form(method='GET', action="/books/search")
+        input#search(name='term', type='text', placeholder="Search")
+        input(type="submit" value="Search")

@@ -5,15 +5,17 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const asyncHandler = require("../misc");
 
-/* GET home page. Shows the full list of books */
+/* GET home page. Shows list of paginated books */
 router.get(
   "/",
   asyncHandler(async (req, res) => {
     //get the page num in the url if no page num yet set to 0
-    const page = req.query.page || 1;
-    const booksPerPage = 10;
+    const page = req.query.page;
 
-    // Calculate offset
+    // redirects to ?page=1 of results
+    !page || page <= 0 ? res.redirect("?page=1") : null;
+
+    const booksPerPage = 10;
     const offset = (page - 1) * booksPerPage;
 
     const { count, rows } = await Book.findAndCountAll({
@@ -25,13 +27,83 @@ router.get(
     //getting the num of pages for pagination
     const numOfPages = Math.ceil(count / booksPerPage);
 
-    //creates an array to iterate through in pug for the pag links
-    const pagLinksArr = [];
-    for (let i = 1; i <= numOfPages; i++) {
-      pagLinksArr.push(i);
-    }
+    // redirects to last page of results if user gets a get request larger than
+    page > numOfPages ? res.redirect(`?page=${numOfPages}`) : null;
 
-    res.render("books/index", { books: rows, title: "All Books", pagLinksArr });
+    //
+    let pageLink = 1;
+
+    res.render("books/index", {
+      books: rows,
+      title: "All Books",
+      numOfPages,
+      pageLink,
+    });
+  })
+);
+
+router.get(
+  "/search",
+  asyncHandler(async (req, res) => {
+    // get the term term
+    const { term } = req.query;
+
+    // get the page number from query string
+    const page = req.query.page || 1;
+
+    // redirects to ?page=1 of results
+    !page || page <= 0 ? res.redirect(`search?term=${term}&page=1`) : null;
+
+    const booksPerPage = 10;
+
+    // Calculate records offset
+    const offset = (page - 1) * booksPerPage;
+
+    const { count, rows } = await Book.findAndCountAll({
+      where: {
+        [Op.or]: [
+          {
+            title: {
+              [Op.like]: `%${term}%`,
+            },
+          },
+          {
+            author: {
+              [Op.like]: `%${term}%`,
+            },
+          },
+          {
+            genre: {
+              [Op.like]: `%${term}%`,
+            },
+          },
+          {
+            year: {
+              [Op.like]: `%${term}%`,
+            },
+          },
+        ],
+      },
+      limit: booksPerPage,
+      offset: offset,
+    });
+
+    if (count > 0) {
+      let pageLink = 1;
+
+      //getting the num of pages for pagination
+      const numOfPages = Math.ceil(count / booksPerPage);
+
+      res.render("books/index", {
+        books: rows,
+        title: "Search",
+        pageLink,
+        term,
+        numOfPages,
+      });
+    } else {
+      res.render("books/no-results", { term, title: "Search" });
+    }
   })
 );
 
@@ -51,7 +123,6 @@ router.post(
     } catch (error) {
       if (error.name === "SequelizeValidationError") {
         // checking the error
-
         book = await Book.build(req.body);
         res.render("books/new-book", {
           book,

@@ -1,12 +1,9 @@
 extends ../layout.pug 
 
 block content
-  p
-    a.button(href='/books/new') Create New Book
 
-    form(method='POST', action="/")
-      input#search(name='search', type='text', placeholder="Search")
-      input(type="submit" value="Search")
+  include ../includes/search-form
+  
   table
     thead
       tr

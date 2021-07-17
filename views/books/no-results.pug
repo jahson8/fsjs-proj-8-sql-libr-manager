@@ -1,0 +1,8 @@
+extends ../layout.pug 
+
+block content
+    include ../includes/search-form 
+    
+    h2 No Book matches the search term "#{term}"
+    p Please try another search or 
+        a(href="/books") return to Book listing
