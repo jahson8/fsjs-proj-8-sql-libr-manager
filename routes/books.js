@@ -5,6 +5,13 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const asyncHandler = require("../misc");
 
+// error handler
+const errorHandler = (errStatus, msg) => {
+  const err = new Error(msg);
+  err.status = errStatus;
+  throw err;
+};
+
 /* GET home page. Shows list of paginated books */
 router.get(
   "/",
@@ -27,17 +34,17 @@ router.get(
     //getting the num of pages for pagination
     const numOfPages = Math.ceil(count / booksPerPage);
 
-    // redirects to last page of results if user gets a get request larger than
+    // redirects to last page of results if user enter a get request larger than numOfPages
     page > numOfPages ? res.redirect(`?page=${numOfPages}`) : null;
 
     //
-    let pageLink = 1;
+    let pageLinks = 1;
 
     res.render("books/index", {
       books: rows,
       title: "All Books",
       numOfPages,
-      pageLink,
+      pageLinks,
     });
   })
 );
@@ -48,14 +55,14 @@ router.get(
     // get the term term
     const { term } = req.query;
 
-    // get the page number from query string
-    const page = req.query.page || 1;
+    //get the page num in the url if no page num yet set to 0
+    let page = req.query.page;
 
     // redirects to ?page=1 of results
     !page || page <= 0 ? res.redirect(`search?term=${term}&page=1`) : null;
 
+    // number of books per page
     const booksPerPage = 10;
-
     // Calculate records offset
     const offset = (page - 1) * booksPerPage;
 
@@ -89,18 +96,24 @@ router.get(
     });
 
     if (count > 0) {
-      let pageLink = 1;
+      let pageLinks = 1;
 
       //getting the num of pages for pagination
       const numOfPages = Math.ceil(count / booksPerPage);
 
+      // redirects to last page of results if user enter a get request larger than numOfPages
+      page > numOfPages
+        ? res.redirect(`?term=${term}&page=${numOfPages}`)
+        : null;
+
       res.render("books/index", {
         books: rows,
         title: "Search",
-        pageLink,
+        pageLinks,
         term,
         numOfPages,
       });
+      console.log(term);
     } else {
       res.render("books/no-results", { term, title: "Search" });
     }

@@ -1,7 +1,7 @@
 ul.pagination-links
-    while pageLink <= numOfPages
+    while pageLinks <= numOfPages
         li
             if term
-                a(href=`/books/search?term=${term}&page=${pageLink}`)= pageLink++
+                a(href=`/books/search?term=${term}&page=${pageLinks}`)= pageLinks++
             else
-                a(href=`/books/?page=${pageLink}`)= pageLink++
+                a(href=`/books/?page=${pageLinks}`)= pageLinks++
