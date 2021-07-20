@@ -2,11 +2,11 @@ extends ../layout.pug
 
 block content
 
-  p 
+  p.del-msg 
     | Are you sure you want to delete 
     em= book.title
     | ?
   form(action="/books/" + book.id + "/delete", method="post")
     a(href="/books/" + book.id) No! Take me back! 
     | 
-    input(type="submit", value = "Yes, I'm sure")
+    input.btn.btn-primary(type="submit", value = "Yes, I'm sure")

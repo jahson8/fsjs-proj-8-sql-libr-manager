@@ -8,7 +8,6 @@ block content
 
         include ../includes/book-form.pug
 
-        p
-            input(type='submit', value='Create New Book')
-        p
-            a.button(href='/books') Cancel
+        div.btn-group
+            input.btn-primary.btn(type='submit', value='Create New Book')
+            a.btn.btn-secondary(href='/books') Cancel

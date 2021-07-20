@@ -1,27 +1,29 @@
 if book
-    p
-        label(for='title') Title
-        input#title(name='title', type='text' value=book.title)
-    p
-        label(for='author') Author
-        input#author(name='author', type='text' value=book.author)
-    p
-        label(for='genre') Genre
-        input#genre(name='genre', type='text', value=book.genre)
-    p
-        label(for='year') Year
-        input#year(name='year', type='text', value=book.year)
+    .book-desc
+        div.form-group
+            label(for='title') Title
+            input#title(name='title', type='text' value=book.title)
+        div.form-group
+            label(for='author') Author
+            input#author(name='author', type='text' value=book.author)
+        div.form-group
+            label(for='genre') Genre
+            input#genre(name='genre', type='text', value=book.genre)
+        div.form-group
+            label(for='year') Year
+            input#year(name='year', type='text', value=book.year)
 
 else
-    p
-        label(for='title') Title
-        input#title(name='title', type='text')
-    p
-        label(for='author') Author
-        input#author(name='author', type='text', )
-    p
-        label(for='genre') Genre
-        input#genre(name='genre', type='text')
-    p
-        label(for='year') Year
-        input#year(name='year', type='text')
+    .book-desc
+        div.form-group
+            label(for='title') Title
+            input#title(name='title', type='text')
+        div.form-group
+            label(for='author') Author
+            input#author(name='author', type='text', )
+        div.form-group
+            label(for='genre') Genre
+            input#genre(name='genre', type='text')
+        div.form-group
+            label(for='year') Year
+            input#year(name='year', type='text')

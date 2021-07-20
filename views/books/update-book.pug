@@ -7,9 +7,7 @@ block content
 
       include ../includes/book-form.pug
       
-      p
-        input(type='submit', value='Add Changes')
-      p4
-          a.button(href=`/books/${book.id}`) Cancel
-      p
-          a.button(href=`/books/${book.id}/delete`) Delete Book
+      div.btn-group
+        input.btn.btn-primary(type='submit', value='Add Changes')
+        a.btn.btn-secondary(href=`/books/${book.id}`) Cancel
+        a.btn.btn-delete(href=`/books/${book.id}/delete`) Delete Book

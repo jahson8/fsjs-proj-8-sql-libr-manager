@@ -1,9 +1,10 @@
-p
+.search-group
     if term
-        a.button(href='/books') Back to Book Listing
+        a.btn-secondary.btn(href='/books') Back to Book Listing
     else 
-        a.button(href='/books/new') Create New Book
+        a.btn-secondary.btn(href='/books/new') Add Book
 
-    form(method='GET', action="/books/search")
-        input#search(name='term', type='text', placeholder="Search")
-        input(type="submit" value="Search")
+    form(action='/books/search' method='GET')
+        input#search(type='search' placeholder='Search' name='term')
+        button.btn.btn-primary(type='submit')
+          | Search

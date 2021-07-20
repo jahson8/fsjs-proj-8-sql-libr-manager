@@ -1,15 +1,22 @@
 doctype html
-html
-  head
-    title Books
-    link(href='/stylesheets/style.css' rel='stylesheet')
-  body
+head
+  title Books
+  link(rel="stylesheet", href="/stylesheets/normalize.css")
+  link(href='https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Merriweather:wght@400;700&family=Open+Sans:wght@400;700&display=swap' rel='stylesheet')
+  link(href='/stylesheets/style.css' rel='stylesheet')
 
-    //- include the page title
-    include includes/title
+    //- include page header
+  include includes/header
+  main
+    .container 
 
-    //- include form-errors
-    include includes/form-errors
+      //- include the page title
+      include includes/title
+
+      //- include form-errors
+      include includes/form-errors
 
     
-    block content
+      block content
+
+  include includes/footer
