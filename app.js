@@ -24,18 +24,23 @@ app.use("/books", books);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  const err = new Error("Page Not Found");
+  err.status = 404;
+  next(err);
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  if (err.status === 404) {
+    res.status(err.status).render("page-not-found", { err });
+  } else {
+    err.status = 500;
+    err.message = "Internal Server Error";
+    res.status(err.status);
+    res.render("error", { err });
+  }
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  console.error(err.status, err.message);
 });
 
 module.exports = app;

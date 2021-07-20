@@ -4,7 +4,7 @@
     else 
         a.btn-secondary.btn(href='/books/new') Add Book
 
-    form(action='/books/search' method='GET')
+    form#search-form(action='/books/search' method='GET')
         input#search(type='search' placeholder='Search' name='term')
         button.btn.btn-primary(type='submit')
           | Search

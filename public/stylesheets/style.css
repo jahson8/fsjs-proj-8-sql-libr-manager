@@ -174,6 +174,7 @@ footer {
 }
 
 /* Results Table */
+
 .results {
   width: 85%;
   margin: 0 auto;
@@ -220,6 +221,7 @@ td {
 }
 
 /* Pagination Link */
+
 .pagination-links {
   display: flex;
   margin-top: 2em;
@@ -241,11 +243,6 @@ td {
   margin-left: 0.7em;
 }
 
-.active {
-  background-color: #fff;
-  color: #81429e;
-}
-
 /* Show Book Page */
 
 .show-book {
@@ -261,7 +258,7 @@ td {
 
 .split-evenly > *:first-child {
   font-weight: bold;
-  width: 150px;
+  width: 100px;
 }
 
 .split-evenly + .btn-group {
@@ -314,4 +311,73 @@ input[type="text"] {
 
 .form-error {
   color: rgb(236, 15, 15);
+}
+
+/* Delete Book Page */
+
+.del-msg {
+  text-align: center;
+}
+
+.del-msg p,
+.del-msg form {
+  margin-top: 3em;
+}
+
+.del-msg input[type="submit"] {
+  margin-left: 1.5em;
+}
+
+.del-msg .title {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.error-msg,
+.del-msg a {
+  color: rgb(236, 15, 15);
+}
+
+.error-msg {
+  padding: 1em;
+  max-width: 600px;
+  margin: 2em auto 3em;
+  text-align: center;
+  border: 2px solid;
+  font-weight: bold;
+}
+
+.error-msg ul > * + * {
+  margin-top: 1.3em;
+}
+
+.error-msg h2 {
+  border-top: none;
+}
+
+/* =================
+Media Query
+====================*/
+
+@media (min-width: 48em) {
+  /* Search Form*/
+
+  .search-group {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  /* book Form*/
+  .form-group label {
+    display: inline-block;
+    width: 20%;
+  }
+
+  .form-group input {
+    width: 40%;
+  }
+
+  form[method="POST"] {
+    text-align: center;
+  }
 }
